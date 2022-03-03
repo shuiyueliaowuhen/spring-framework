@@ -543,12 +543,22 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
+		// @sf 核心方法
+
 		synchronized (this.startupShutdownMonitor) {
 			StartupStep contextRefresh = this.applicationStartup.start("spring.context.refresh");
 
+			// @sf 预刷新 具体工作内容如下
+			// step1：设置容器启动时间
+			// step2：设置活跃状态为true
+			// step3：设置关闭状态为false
+			// step4：获取Environment对象，并加载当前系统的属性值到Environment对象中
+			// step5：准备监听器和时间的集合对象，默认是空集合
 			// Prepare this context for refreshing.
 			prepareRefresh();
 
+			// @sf 创建容器对象： DefaultListableBeanFactory
+			// @sf 加载xml配置文件的属性值到当前工厂中，最重要的就是BeadDefinition
 			// Tell the subclass to refresh the internal bean factory.
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
@@ -571,11 +581,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
+				// @sf 初始化事件多播器
+
+
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
 				onRefresh();
 
+				// @sf 注册监听器
 				// Check for listener beans and register them.
 				registerListeners();
 
@@ -616,6 +630,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * active flag as well as performing any initialization of property sources.
 	 */
 	protected void prepareRefresh() {
+		// @sf 设置开始时间 设置开启和关闭状态
 		// Switch to active.
 		this.startupDate = System.currentTimeMillis();
 		this.closed.set(false);
@@ -633,10 +648,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// Initialize any placeholder property sources in the context environment.
 		initPropertySources();
 
+		// @sf 获取环境并验证所需的属性
 		// Validate that all properties marked as required are resolvable:
 		// see ConfigurablePropertyResolver#setRequiredProperties
 		getEnvironment().validateRequiredProperties();
 
+		// @sf 存储监听器
 		// Store pre-refresh ApplicationListeners...
 		if (this.earlyApplicationListeners == null) {
 			this.earlyApplicationListeners = new LinkedHashSet<>(this.applicationListeners);
@@ -647,6 +664,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			this.applicationListeners.addAll(this.earlyApplicationListeners);
 		}
 
+		// @sf 监听事件集合
 		// Allow for the collection of early ApplicationEvents,
 		// to be published once the multicaster is available...
 		this.earlyApplicationEvents = new LinkedHashSet<>();

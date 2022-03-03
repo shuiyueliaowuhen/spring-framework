@@ -65,7 +65,7 @@ import org.springframework.util.StringUtils;
  *
  * <p>Typically applied to a
  * {@link org.springframework.beans.factory.support.DefaultListableBeanFactory}
- * or a {@link org.springframework.context.support.GenericApplicationContext},
+ * or a {@lin k org.springframework.context.support.GenericApplicationContext},
  * but can be used against any {@link BeanDefinitionRegistry} implementation.
  *
  * <h3>Example Syntax</h3>
@@ -126,8 +126,8 @@ import org.springframework.util.StringUtils;
  * @since 4.0
  * @see BeanDefinitionRegistry
  * @see org.springframework.beans.factory.support.DefaultListableBeanFactory
- * @see org.springframework.context.support.GenericApplicationContext
- * @see org.springframework.context.support.GenericGroovyApplicationContext
+// * @see org.springframework.context.support.GenericApplicationContext
+// * @see org.springframework.context.support.GenericGroovyApplicationContext
  */
 public class GroovyBeanDefinitionReader extends AbstractBeanDefinitionReader implements GroovyObject {
 
