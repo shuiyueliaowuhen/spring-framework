@@ -9,7 +9,6 @@ public class Test {
 		ClassPathXmlApplicationContext classPathXmlApplicationContext =
 				new ClassPathXmlApplicationContext("application.xml");
 
-		System.out.println("大哥"+111);
 
 	}
 
